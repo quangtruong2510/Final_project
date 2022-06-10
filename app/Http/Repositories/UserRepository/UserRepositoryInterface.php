@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Repositories\UserRepository;
-
 interface UserRepositoryInterface {
   public function create($data);
 

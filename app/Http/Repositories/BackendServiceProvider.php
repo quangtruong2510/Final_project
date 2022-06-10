@@ -17,9 +17,9 @@ class BackendServiceProvider extends ServiceProvider
         //     'App\Repositories\RefreshTokenRepository\RefreshTokenRepositoryInterface',
         //     'App\Repositories\RefreshTokenRepository\RefreshTokenRepository'
         // );
-        // $this->app->bind(
-        //     'App\Repositories\CampaignRepository\CampaignRepositoryInterface',
-        //     'App\Repositories\CampaignRepository\CampaignRepository'
-        // );
+        $this->app->bind(
+            'App\Http\Repositories\DestinationRepository\DestinationRepositoryInterface',
+            'App\Http\Repositories\DestinationRepository\DestinationRepository'
+        );
     }
 }
