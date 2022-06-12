@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Http\Repositories\DestinationRepository\DestinationRepositoryInterface;
-
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Cloudder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use LaravelCloudinary;
 
 class DestinationController extends Controller
 {
@@ -19,6 +19,15 @@ class DestinationController extends Controller
 
     public function createDestination(){
         $input = request()->all();
+
+        // $this->validate($request,[
+        //     'image_name'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
+        // ]);
+        dd(request()->file('image_name'));
+        $image_name = request()->file('image_name')->getRealPath();
+        // LaravelCloudinary::uploadImage($image, $folderName, $fileName, $options);
+        // Cloudder::upload($image_name, 'uploads/' . $image_name);
+
         list($errors,$output) = $this->destinationRepo->validate($input);
         if(count($errors) > 0){
             return response()->json([

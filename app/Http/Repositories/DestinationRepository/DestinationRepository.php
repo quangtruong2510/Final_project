@@ -71,5 +71,6 @@ class DestinationRepository implements DestinationRepositoryInterface
         return Destination::where('user_id', JWTAuth::user()->id)->get();
     }
 
+    
 
 }

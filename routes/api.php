@@ -32,7 +32,7 @@ Route::group([
     'middleware' => 'api', 'auth',
     'prefix' => 'destination',
 ], function ($router) {
-    Route::post('create', 'DestinationController@createDestination');
+    Route::post('/', 'DestinationController@createDestination');
     Route::delete('delete/{id}', 'DestinationController@deleteDestination');
     Route::put('update/{id}', 'DestinationController@updateDestination');
     Route::get('favourite/', 'DestinationController@getListFavouriteDestination');
