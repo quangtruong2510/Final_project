@@ -33,10 +33,14 @@ Route::group([
     'prefix' => 'destination',
 ], function ($router) {
     Route::post('create', 'DestinationController@createDestination');
-    // Route::post('login', 'AuthController@login');
-    // Route::post('logout', 'AuthController@logout');
-    // Route::post('refresh', 'AuthController@refresh');
-    // Route::get('me', 'AuthController@me');
+    Route::delete('delete/{id}', 'DestinationController@deleteDestination');
+    Route::put('update/{id}', 'DestinationController@updateDestination');
+    Route::get('favourite/', 'DestinationController@getListFavouriteDestination');
+    Route::get('/', 'DestinationController@getAllDestination');
+    Route::get('/{id}', 'DestinationController@getDestinationById');
+    Route::put('favourite/{id}', 'DestinationController@addToFavouriteListDestination');
+    Route::get('category/', 'DestinationController@getListCategories');
+
 
 });
 

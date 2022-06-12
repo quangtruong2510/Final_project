@@ -3,7 +3,7 @@
 namespace App\Http\Repositories\DestinationRepository;
 
 use App\Http\Repositories\DestinationRepository\DestinationRepositoryInterface;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\Destination;
 
 class DestinationRepository implements DestinationRepositoryInterface
@@ -18,7 +18,7 @@ class DestinationRepository implements DestinationRepositoryInterface
             'note'  => 'string|max:255',
             'category_id' => 'required|numeric',
             'number_contact' =>'numeric|digits:10',
-            'location'  => 'required',
+            'location'  => 'required|string|max:255',
             'image_url'  => 'string|regex:'.$regex,
         ]);
         $errors =[];
@@ -28,40 +28,48 @@ class DestinationRepository implements DestinationRepositoryInterface
 
     public function createDestination($data)
     {   
-        $user = Destination::create(array_merge($data,
-        [
-            'is_favourite' => false,
-            // 'user_id' => auth()
-        ]
-    ));
-    //     $newUser = [
-    //         'name' => request()->get('name'),
-    //         'email' => request()->get('email'),
-    //         'password' => bcrypt(request()->get('password'))
-    //     ];
-    //     $user = User::create( $newUser);
-    //     return response()->json(
-    //         [
-    //             'message' => ' successfully registered',
-    //             'user' => $user
-    //         ]
-    //     );
+        return  Destination::create(array_merge($data,
+            [
+                'is_favourite' => false,
+                'user_id' => JWTAuth::user()->id
+            ]
+        ));
     }
 
-    public function findDestinationById($user_id)
+    public function findDestinationById($id)
     {
-        return User::where('id', $user_id)->first();
+        return Destination::where([
+                ['user_id','=',JWTAuth::user()->id],
+                ['id','=',$id]
+            ])->first();
     }
 
-    public function updateDestination($user_id, $new_password)
+    public function updateDestination($id,$destination)
     {   
-        return User::where('id', $user_id)->update(
-        ['password' => bcrypt($new_password)]
-        );
+        return Destination::where('id', $id)->update($destination);
     }
 
     public function deleteDestinationById($id){
-
+        return Destination::where('id', $id)->delete();
     }
+
+    public function getListFavouriteDestinations(){
+        return Destination::where([   
+                ['user_id','=',JWTAuth::user()->id],
+                ['is_favourite','=',true]
+            ])->get();
+    }
+
+    public function updateStatusFavouriteDestinations($id,$value){
+        return Destination::where([
+            ['user_id','=',JWTAuth::user()->id],
+            ['id','=',$id]
+        ])->update($value);
+    }
+
+    public function getListDestinations(){
+        return Destination::where('user_id', JWTAuth::user()->id)->get();
+    }
+
 
 }
