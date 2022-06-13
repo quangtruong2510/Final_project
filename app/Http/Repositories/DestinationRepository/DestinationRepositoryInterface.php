@@ -19,6 +19,6 @@ interface DestinationRepositoryInterface {
 
   public function updateStatusFavouriteDestinations($id,$value);
 
-
+  public function getDestinationByCategoryId($id);
 
 }

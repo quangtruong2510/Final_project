@@ -17,8 +17,6 @@ Route::group([
 
     'middleware' => 'api',
     'prefix' => 'auth',
-    // 'namespace' => 'App\Http\Controllers'
-
 ], function ($router) {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
@@ -32,14 +30,23 @@ Route::group([
     'middleware' => 'api', 'auth',
     'prefix' => 'destination',
 ], function ($router) {
-    Route::post('/', 'DestinationController@createDestination');
-    Route::delete('delete/{id}', 'DestinationController@deleteDestination');
-    Route::put('update/{id}', 'DestinationController@updateDestination');
-    Route::get('favourite/', 'DestinationController@getListFavouriteDestination');
     Route::get('/', 'DestinationController@getAllDestination');
+    Route::post('/', 'DestinationController@createDestination');
+    Route::put('/{id}', 'DestinationController@updateDestination');
+    Route::delete('/{id}', 'DestinationController@deleteDestination');
     Route::get('/{id}', 'DestinationController@getDestinationById');
+    Route::get('favourite/', 'DestinationController@getListFavouriteDestination');
     Route::put('favourite/{id}', 'DestinationController@addToFavouriteListDestination');
-    Route::get('category/', 'DestinationController@getListCategories');
+    Route::get('category/{id}', 'DestinationController@getDestinationByCategoryId');
+});
+
+Route::group([
+    'middleware' => 'api', 'auth',
+    'prefix' => 'category',
+], function ($router) {
+    Route::post('/', 'CategoryController@createCategory');
+    Route::delete('/{id}', 'CategoryController@deleteCategoryById');
+    Route::get('/', 'CategoryController@getListCategory');
 
 
 });

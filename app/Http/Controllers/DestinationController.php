@@ -19,15 +19,6 @@ class DestinationController extends Controller
 
     public function createDestination(){
         $input = request()->all();
-
-        // $this->validate($request,[
-        //     'image_name'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
-        // ]);
-        dd(request()->file('image_name'));
-        $image_name = request()->file('image_name')->getRealPath();
-        // LaravelCloudinary::uploadImage($image, $folderName, $fileName, $options);
-        // Cloudder::upload($image_name, 'uploads/' . $image_name);
-
         list($errors,$output) = $this->destinationRepo->validate($input);
         if(count($errors) > 0){
             return response()->json([
@@ -53,6 +44,14 @@ class DestinationController extends Controller
             'message' => 'Successfully deleted',
             200
         ]);;
+    }
+
+    public function getDestinationByCategoryId($id){
+        $destinations = $this->destinationRepo->getDestinationByCategoryId($id);
+        return response()->json([
+            'message'   => 'Successfully Updated',
+            'data'      => $destinations
+        ],200);
     }
 
     public function updateDestination($id){

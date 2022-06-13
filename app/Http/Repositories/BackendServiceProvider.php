@@ -13,10 +13,10 @@ class BackendServiceProvider extends ServiceProvider
             'App\Http\Repositories\UserRepository\UserRepositoryInterface',
             'App\Http\Repositories\UserRepository\UserRepository',
         );
-        // $this->app->bind(
-        //     'App\Repositories\RefreshTokenRepository\RefreshTokenRepositoryInterface',
-        //     'App\Repositories\RefreshTokenRepository\RefreshTokenRepository'
-        // );
+        $this->app->bind(
+            'App\Http\Repositories\CategoryRepository\CategoryRepositoryInterface',
+            'App\Http\Repositories\CategoryRepository\CategoryRepository'
+        );
         $this->app->bind(
             'App\Http\Repositories\DestinationRepository\DestinationRepositoryInterface',
             'App\Http\Repositories\DestinationRepository\DestinationRepository'

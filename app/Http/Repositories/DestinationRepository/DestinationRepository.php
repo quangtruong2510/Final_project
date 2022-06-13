@@ -5,6 +5,7 @@ namespace App\Http\Repositories\DestinationRepository;
 use App\Http\Repositories\DestinationRepository\DestinationRepositoryInterface;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\Destination;
+use App\Models\Category;
 
 class DestinationRepository implements DestinationRepositoryInterface
 {   
@@ -28,12 +29,16 @@ class DestinationRepository implements DestinationRepositoryInterface
 
     public function createDestination($data)
     {   
-        return  Destination::create(array_merge($data,
+        $destination =  Destination::create(array_merge($data,
             [
                 'is_favourite' => false,
                 'user_id' => JWTAuth::user()->id
             ]
         ));
+        $category = Category::find($destination->category_id);
+        $category->quantity += 1  ;
+        $category->save();
+        return $destination;
     }
 
     public function findDestinationById($id)
@@ -49,8 +54,27 @@ class DestinationRepository implements DestinationRepositoryInterface
         return Destination::where('id', $id)->update($destination);
     }
 
-    public function deleteDestinationById($id){
-        return Destination::where('id', $id)->delete();
+    public function getDestinationByCategoryId($id)
+    {    
+        return Destination::where([   
+            ['user_id','=',JWTAuth::user()->id],
+            ['category_id','=',$id]])->get();
+    }
+
+
+    public function deleteDestinationById($id)
+    {    
+        $destination_check = Destination::find($id);
+        $destination =  Destination::where([   
+            ['user_id','=',JWTAuth::user()->id],
+            ['id','=',$id]])->delete();
+        if($destination){
+            $category = Category::find($destination_check->category_id);
+            $category->quantity -= 1  ;
+            $category->save();
+        }
+        return $destination;
+       
     }
 
     public function getListFavouriteDestinations(){
