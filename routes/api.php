@@ -23,7 +23,6 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
-
 });
 
 Route::group([
@@ -47,7 +46,5 @@ Route::group([
     Route::post('/', 'CategoryController@createCategory');
     Route::delete('/{id}', 'CategoryController@deleteCategoryById');
     Route::get('/', 'CategoryController@getListCategory');
-
-
 });
 

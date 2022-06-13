@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\Http\Repositories\DestinationRepository\DestinationRepositoryInterface;
-use Cloudder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use LaravelCloudinary;
@@ -26,6 +25,10 @@ class DestinationController extends Controller
                 'message' => $errors
             ], 422);
         }
+        $filename = request()->get('image_url');
+
+        Cloudder::uploadVideo($filename, $publicId, null, null);
+
         $result = $this->destinationRepo->createDestination($output);
         return response()->json([
             'message' => 'Successfully Created ',
