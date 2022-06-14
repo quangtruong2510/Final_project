@@ -83,7 +83,7 @@ class DestinationRepository implements DestinationRepositoryInterface
 
     public function updateStatusFavouriteDestinations($id){
         $destination = Destination::find($id);
-        $destination->is_favourite = true;
+        $destination->is_favourite = ! $destination->is_favourite;
         $destination->save();
     }
 
