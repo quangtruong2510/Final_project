@@ -25,9 +25,9 @@ class DestinationController extends Controller
                 'message' => $errors
             ], 422);
         }
-        $filename = request()->get('image_url');
+        // $filename = request()->get('image_url');
 
-        Cloudder::uploadVideo($filename, $publicId, null, null);
+        // Cloudder::uploadVideo($filename, $publicId, null, null);
 
         $result = $this->destinationRepo->createDestination($output);
         return response()->json([

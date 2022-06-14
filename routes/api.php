@@ -29,8 +29,8 @@ Route::group([
     'middleware' => 'api', 'auth',
     'prefix' => 'destination',
 ], function ($router) {
-    Route::get('/', 'DestinationController@getAllDestination');
-    Route::post('/', 'DestinationController@createDestination');
+    Route::get('', 'DestinationController@getAllDestination');
+    Route::post('', 'DestinationController@createDestination');
     Route::put('/{id}', 'DestinationController@updateDestination');
     Route::delete('/{id}', 'DestinationController@deleteDestination');
     Route::get('/{id}', 'DestinationController@getDestinationById');
