@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function getListCategory(){
         $result = $this->categoryRepository->getListCategory();
         return response()->json([
-            'message' => 'Successfully get',
+            'message' => 'Successfully get ',
             'data' => $result
         ],200);
     }

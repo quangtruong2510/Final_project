@@ -35,9 +35,9 @@ class DestinationRepository implements DestinationRepositoryInterface
                 'user_id' => JWTAuth::user()->id
             ]
         ));
-        $category = Category::find($destination->category_id);
-        $category->quantity += 1  ;
-        $category->save();
+        // $category = Category::find($destination->category_id);
+        // $category->quantity += 1  ;
+        // $category->save();
         return $destination;
     }
 
