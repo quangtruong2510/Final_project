@@ -35,14 +35,8 @@ class DestinationRepository implements DestinationRepositoryInterface
                 'user_id' => JWTAuth::user()->id
             ]
         ));
-        $category = Category::find($destination->category_id);
-        dd($category->quantity);
-        $category->quantity += 1  ;
-        $category->save();
-
         return $destination;
     }
-
 
     public function findDestinationById($id)
     {
@@ -87,11 +81,10 @@ class DestinationRepository implements DestinationRepositoryInterface
             ])->get();
     }
 
-    public function updateStatusFavouriteDestinations($id,$value){
-        return Destination::where([
-            ['user_id','=',JWTAuth::user()->id],
-            ['id','=',$id]
-        ])->update($value);
+    public function updateStatusFavouriteDestinations($id){
+        $destination = Destination::find($id);
+        $destination->is_favourite = true;
+        $destination->save();
     }
 
     public function getListDestinations(){

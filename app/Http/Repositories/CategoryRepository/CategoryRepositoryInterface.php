@@ -8,5 +8,8 @@ interface CategoryRepositoryInterface {
   public function deleteCategoryById($id);
 
   public function getListCategory();
+  
+  public function updateQuantity($id_category);
+
 
 }

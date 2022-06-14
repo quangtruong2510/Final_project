@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Http\Repositories\DestinationRepository\DestinationRepositoryInterface;
+use App\Http\Repositories\CategoryRepository\CategoryRepositoryInterface;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use LaravelCloudinary;
@@ -10,8 +12,10 @@ class DestinationController extends Controller
 {
     //
     protected $destinationRepo;
-    public function __construct(DestinationRepositoryInterface $destinationRepo)
-    {       
+    protected $categoryRepo;
+    public function __construct(DestinationRepositoryInterface $destinationRepo, CategoryRepositoryInterface $categoryRepo) 
+    {   
+        $this->categoryRepo = $categoryRepo;
         $this->destinationRepo = $destinationRepo;
         $this->middleware('auth:api');
     }
@@ -25,21 +29,27 @@ class DestinationController extends Controller
                 'message' => $errors
             ], 422);
         }
-
-        $result = $this->destinationRepo->createDestination($output);
+        $destination = $this->destinationRepo->createDestination($output);
+        if($destination){
+            $this->categoryRepo->updateQuantity( $destination->category_id);
+        }
         return response()->json([
             'message' => 'Successfully Created ',
-            'data' => $result
+            'data' => $destination
         ],201);
     }
     public function deleteDestination($id){
-        if( ! $this->destinationRepo->findDestinationById($id)) {
+        if( ! $destination = $this->destinationRepo->findDestinationById($id)) {
             return response()->json([
                 'message' => 'fail',
                 'message' => 'invalid ID',
             ],400);
         }
-        $this->destinationRepo->deleteDestinationById($id);
+        $idCategory = $destination->category_id;
+        if ( $this->destinationRepo->deleteDestinationById($id) )
+        {   
+            $this->categoryRepo->updateQuantity($idCategory);
+        }
         return  response()->json([
             'message' => 'Successfully deleted',
             200
@@ -114,8 +124,7 @@ class DestinationController extends Controller
                 'message' => 'invalid ID',
             ],400);
         }
-        $input = request()->all();
-        $result = $this->destinationRepo->updateStatusFavouriteDestinations($id,$input);
+        $result = $this->destinationRepo->updateStatusFavouriteDestinations($id);
         return response()->json([
             'message'   => 'Successfully Updated',
             'data'      => $result

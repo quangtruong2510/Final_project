@@ -34,5 +34,19 @@ class CategoryRepository implements CategoryRepositoryInterface
         ])->get();
         return $categories;
     }
+
+  public function updateQuantity($id_category){
+    $categories = Destination::where([   
+        ['user_id','=',JWTAuth::user()->id],
+        ['category_id','=',$id_category],
+    ])->get();
+
+    $quantity = count($categories);
+
+    $categories = Category::find($id_category);
+        $categories->quantity =  $quantity;
+        $categories->save();
+  }
+
    
 }

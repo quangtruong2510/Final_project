@@ -29,22 +29,43 @@ Route::group([
     'middleware' => 'api', 'auth',
     'prefix' => 'destination',
 ], function ($router) {
-    Route::get('getlist', 'DestinationController@getAllDestination');
-    Route::post('create', 'DestinationController@createDestination');
+    // http://127.0.0.1:8000/api/destination
+    Route::get('', 'DestinationController@getAllDestination');
+
+    // https://save-location-final.herokuapp.com/api/category
+    Route::post('', 'DestinationController@createDestination');
+
+    // http://127.0.0.1:8000/api/destination/favourite
+    Route::get('favourite', 'DestinationController@getListFavouriteDestination');
+
+    // http://127.0.0.1:8000/api/destination/{id}
     Route::put('/{id}', 'DestinationController@updateDestination');
+
+    // http://127.0.0.1:8000/api/destination/{id}
     Route::delete('/{id}', 'DestinationController@deleteDestination');
+
+    // http://127.0.0.1:8000/api/destination/{id}
     Route::get('/{id}', 'DestinationController@getDestinationById');
-    Route::get('favourite/', 'DestinationController@getListFavouriteDestination');
+    
+    // http://127.0.0.1:8000/api/destination/favourite/18
     Route::put('favourite/{id}', 'DestinationController@addToFavouriteListDestination');
+
+    // http://127.0.0.1:8000/api/destination/category/1
     Route::get('category/{id}', 'DestinationController@getDestinationByCategoryId');
+
 });
 
 Route::group([
     'middleware' => 'api', 'auth',
     'prefix' => 'category',
 ], function ($router) {
+    
+    // https://save-location-final.herokuapp.com/api/category
     Route::post('/', 'CategoryController@createCategory');
+
     Route::delete('/{id}', 'CategoryController@deleteCategoryById');
+
+    // https://save-location-final.herokuapp.com/api/category
     Route::get('/', 'CategoryController@getListCategory');
 });
 
