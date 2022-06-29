@@ -21,4 +21,12 @@ interface DestinationRepositoryInterface {
 
   public function getDestinationByCategoryId($id);
 
+  public function getListScheduleDestination();
+  
+  public function addDestinationToSchedule($id);
+
+  public function deleteScheduleDestinationById($id);
+  
+  public function deleteScheduleList();
+
 }

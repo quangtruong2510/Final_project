@@ -11,5 +11,4 @@ interface CategoryRepositoryInterface {
   
   public function updateQuantity($id_category);
 
-
 }

@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.3.3",
         "fideloper/proxy": "^4.0",
-        "ijalnasution/laravel-cloudinary": "dev-master",
+        "jrm2k6/cloudder": "0.4.*",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "tymon/jwt-auth": "^1.0"

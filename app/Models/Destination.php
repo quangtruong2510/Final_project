@@ -18,6 +18,7 @@ class Destination extends Model
         'location',
         'image_url',
         'is_favourite',
+        'is_schedule',
         'user_id'
     ];
 }

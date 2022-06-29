@@ -20,7 +20,7 @@ class DestinationController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function createDestination(){
+    public function createDestination(Request $request){
         $input = request()->all();
         list($errors,$output) = $this->destinationRepo->validate($input);
         if(count($errors) > 0){
@@ -34,7 +34,7 @@ class DestinationController extends Controller
             $this->categoryRepo->updateQuantity( $destination->category_id);
         }
         return response()->json([
-            'message' => 'Successfully Created ',
+            'message' => 'Created Successfully!',
             'data' => $destination
         ],201);
     }
@@ -51,7 +51,7 @@ class DestinationController extends Controller
             $this->categoryRepo->updateQuantity($idCategory);
         }
         return  response()->json([
-            'message' => 'Successfully deleted',
+            'message' => 'Deleted Successfully!',
             200
         ]);;
     }
@@ -59,7 +59,7 @@ class DestinationController extends Controller
     public function getDestinationByCategoryId($id){
         $destinations = $this->destinationRepo->getDestinationByCategoryId($id);
         return response()->json([
-            'message'   => 'Successfully Updated',
+            'message'   => 'Get Successfully',
             'data'      => $destinations
         ],200);
     }
@@ -67,22 +67,21 @@ class DestinationController extends Controller
     public function updateDestination($id){
         if( ! $this->destinationRepo->findDestinationById($id)) {
             return response()->json([
-                'message' => 'fail',
+                'status' => 'fail',
                 'message' => 'invalid ID',
             ],400);
         }
         $input = request()->all();
         list($errors,$output) = $this->destinationRepo->validate($input);
-        // dd($errors,$output);
         if(count($errors) > 0){
             return response()->json([
-                'status' => 'Create Update',
+                'status' => 'Fail ',
                 'message' => $errors
             ], 422);
         }
         $result = $this->destinationRepo->updateDestination($id,$input);
         return response()->json([
-            'message'   => 'Successfully Updated',
+            'message'   => 'Updated Successfully',
             'data'      => $output
         ],201);
     }
@@ -90,7 +89,7 @@ class DestinationController extends Controller
     public function getAllDestination(){
         $result = $this->destinationRepo->getListDestinations();
         return response()->json([
-            'message'   => 'Successfully',
+            'message'   => 'Get Successfully',
             'data'      => $result
         ],200);
     }
@@ -104,7 +103,7 @@ class DestinationController extends Controller
             ],400);
         }
         return response()->json([
-            'message'   => 'Successfully',
+            'message'   => 'Get Successfully',
             'data'      => $destination
         ],200);
     }
@@ -128,12 +127,53 @@ class DestinationController extends Controller
         return response()->json([
             'message'   => 'Successfully Updated',
             'data'      => $result
-        ],201);
+        ],200);
     }
 
-    public function getListCategories(){
+    public function addToScheduleListDestination($id){
+        if( ! $this->destinationRepo->findDestinationById($id)) {
+            return response()->json([
+                'message' => 'fail',
+                'message' => 'invalid ID',
+            ],400);
+        }
+        $result = $this->destinationRepo->addDestinationToSchedule($id);
+        return response()->json([
+            'message'   => 'Successfully',
+            'data'      => $result
+        ],200);
+    }
+
+    public function getListScheduleDestination(){
+        $result = $this->destinationRepo->getListScheduleDestination();
+        return response()->json([
+            'message'   => 'Successfully',
+            'data'      => $result
+        ],200);
+    }
+
+    public function deleteDestinationFromListSchedule($id){
+        if( ! $destination = $this->destinationRepo->findDestinationById($id)) {
+            return response()->json([
+                'message' => 'fail',
+                'message' => 'invalid ID',
+            ],400);
+        }
         
+        if( $this->destinationRepo->deleteScheduleDestinationById($id)){
+            return  response()->json([
+                'message' => 'Deleted Successfully!',
+            ],200);;
+        }
     }
 
+    public function deleteScheduleList(){
+        if( $this->destinationRepo->deleteScheduleList()){
+            return  response()->json([
+                'message' => 'Deleted Successfully!',
+                
+            ],200);;
+        }
+    }
 
 }

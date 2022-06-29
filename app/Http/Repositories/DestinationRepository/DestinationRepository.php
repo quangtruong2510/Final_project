@@ -30,7 +30,8 @@ class DestinationRepository implements DestinationRepositoryInterface
     public function createDestination($data)
     {   
         $destination =  Destination::create(array_merge($data,
-            [
+            [   
+                'is_schedule' => false,
                 'is_favourite' => false,
                 'user_id' => JWTAuth::user()->id
             ]
@@ -58,7 +59,6 @@ class DestinationRepository implements DestinationRepositoryInterface
             ['category_id','=',$id]])->get();
     }
 
-
     public function deleteDestinationById($id)
     {    
         $destination_check = Destination::find($id);
@@ -71,14 +71,13 @@ class DestinationRepository implements DestinationRepositoryInterface
             $category->save();
         }
         return $destination;
-       
     }
 
     public function getListFavouriteDestinations(){
         return Destination::where([   
-                ['user_id','=',JWTAuth::user()->id],
-                ['is_favourite','=',true]
-            ])->get();
+            ['user_id','=',JWTAuth::user()->id],
+            ['is_favourite','=',true]
+        ])->get();
     }
 
     public function updateStatusFavouriteDestinations($id){
@@ -91,6 +90,26 @@ class DestinationRepository implements DestinationRepositoryInterface
         return Destination::where('user_id', JWTAuth::user()->id)->get();
     }
 
-    
+    public function addDestinationToSchedule($id){
+        $destination = Destination::find($id);
+        $destination->is_schedule = true;
+        $destination->save();
+    }
+
+    public function getListScheduleDestination(){
+        return Destination::where([   
+            ['user_id','=',JWTAuth::user()->id],
+            ['is_schedule','=',true]
+        ])->get();
+    }
+
+    public function deleteScheduleDestinationById($id){
+        $destination = Destination::find($id);
+        $destination->is_schedule = false;
+        $destination->save();
+    }
+    public function deleteScheduleList(){
+        return Destination::where('user_id', JWTAuth::user()->id)->update(['is_schedule' => false]);
+    }
 
 }
