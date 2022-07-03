@@ -25,6 +25,7 @@ class CreateDestinationsTable extends Migration
             $table->string('image_url');
             $table->boolean('is_favourite');
             $table->boolean('is_schedule');
+            $table->boolean('is_complete');
             $table->integer('user_id');
             $table->timestamps();
         });

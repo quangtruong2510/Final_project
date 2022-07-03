@@ -176,4 +176,18 @@ class DestinationController extends Controller
         }
     }
 
+    public function completeSchedule($id){
+        if( ! $this->destinationRepo->findDestinationById($id)) {
+            return response()->json([
+                'message' => 'fail',
+                'message' => 'invalid ID',
+            ],400);
+        }
+        $result = $this->destinationRepo->submitCompleteSchedule($id);
+        return response()->json([
+            'message'   => 'Successfully',
+            'data'      => $result
+        ],200);
+    }
+
 }

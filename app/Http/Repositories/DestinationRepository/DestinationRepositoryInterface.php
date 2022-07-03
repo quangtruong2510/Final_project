@@ -28,5 +28,7 @@ interface DestinationRepositoryInterface {
   public function deleteScheduleDestinationById($id);
   
   public function deleteScheduleList();
+  
+  public function submitCompleteSchedule($id);
 
 }

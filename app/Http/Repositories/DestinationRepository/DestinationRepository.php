@@ -31,7 +31,8 @@ class DestinationRepository implements DestinationRepositoryInterface
     {   
         $destination =  Destination::create(array_merge($data,
             [   
-                'is_schedule' => false,
+                'is_complete'  => false,
+                'is_schedule'  => false,
                 'is_favourite' => false,
                 'user_id' => JWTAuth::user()->id
             ]
@@ -108,8 +109,15 @@ class DestinationRepository implements DestinationRepositoryInterface
         $destination->is_schedule = false;
         $destination->save();
     }
+
     public function deleteScheduleList(){
         return Destination::where('user_id', JWTAuth::user()->id)->update(['is_schedule' => false]);
+    }
+
+    public function submitCompleteSchedule($id){
+        $destination = Destination::find($id);
+        $destination->is_complete = ! $destination->is_complete;
+        $destination->save();
     }
 
 }
