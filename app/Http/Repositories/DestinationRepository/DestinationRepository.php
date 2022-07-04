@@ -10,7 +10,6 @@ use App\Models\Category;
 class DestinationRepository implements DestinationRepositoryInterface
 {   
     public function validate($input){
-        $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
         $validator =  Validator()->make($input,
         [   
             'longtitude' => 'required|numeric',
@@ -20,7 +19,7 @@ class DestinationRepository implements DestinationRepositoryInterface
             'category_id' => 'required|numeric',
             'number_contact' =>'numeric|digits:10',
             'location'  => 'required|string|max:255',
-            'image_url'  => 'string|regex:'.$regex,
+            'image_url'  => 'string|max:255',
         ]);
         $errors =[];
         $errors = $validator->errors();

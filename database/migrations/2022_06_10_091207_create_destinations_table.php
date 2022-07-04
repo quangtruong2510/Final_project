@@ -22,7 +22,7 @@ class CreateDestinationsTable extends Migration
             $table->integer('category_id');
             $table->string('number_contact')->nullable();
             $table->string('location')->nullable();
-            $table->string('image_url');
+            $table->string('image_url')->nullable();
             $table->boolean('is_favourite');
             $table->boolean('is_schedule');
             $table->boolean('is_complete');
