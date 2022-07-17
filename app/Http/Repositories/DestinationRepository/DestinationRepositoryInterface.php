@@ -31,4 +31,7 @@ interface DestinationRepositoryInterface {
   
   public function submitCompleteSchedule($id);
 
+  public function CompleteSchedule();
+
+
 }

@@ -190,4 +190,12 @@ class DestinationController extends Controller
         ],200);
     }
 
+    public function completecheduleList(){
+        $result = $this->destinationRepo->completeSchedule();
+        return response()->json([
+            'message'   => 'Successfully',
+            'data'      => $result
+        ],200);
+    }
+
 }

@@ -119,4 +119,13 @@ class DestinationRepository implements DestinationRepositoryInterface
         $destination->save();
     }
 
+  public function CompleteSchedule(){
+        return Destination::where([   
+            ['user_id','=',JWTAuth::user()->id],
+            ['is_schedule','=',true]
+        ])->update(['is_complete' => true]);
+        ;
+    }
+
+
 }
