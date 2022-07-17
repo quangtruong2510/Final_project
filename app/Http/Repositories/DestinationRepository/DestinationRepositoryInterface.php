@@ -33,5 +33,7 @@ interface DestinationRepositoryInterface {
 
   public function CompleteSchedule();
 
+  public function isAvailableSchedule($id);
+
 
 }

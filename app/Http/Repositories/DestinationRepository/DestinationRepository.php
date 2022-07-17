@@ -127,5 +127,13 @@ class DestinationRepository implements DestinationRepositoryInterface
         ;
     }
 
+    public function isAvailableSchedule($id){
+        return $destination = Destination::where([   
+            ['user_id','=',JWTAuth::user()->id],
+            ['is_schedule','=',true],
+            ['id','=',$id]
+        ])->get();
+    }
+
 
 }

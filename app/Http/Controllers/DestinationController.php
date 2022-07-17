@@ -131,16 +131,21 @@ class DestinationController extends Controller
     }
 
     public function addToScheduleListDestination($id){
-        if( ! $this->destinationRepo->findDestinationById($id)) {
+        if( ! $this->destinationRepo->findDestinationById($id) ) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'invalid ID',
+            ],400);
+        }
+        if( $this->destinationRepo->isAvailableSchedule($id) ) {
             return response()->json([
                 'message' => 'fail',
-                'message' => 'invalid ID',
+                'message' => 'This Destination is exist in schedule List',
             ],400);
         }
         $result = $this->destinationRepo->addDestinationToSchedule($id);
         return response()->json([
             'message'   => 'Successfully',
-            'data'      => $result
         ],200);
     }
 
