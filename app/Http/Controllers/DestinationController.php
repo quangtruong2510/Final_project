@@ -137,7 +137,7 @@ class DestinationController extends Controller
                 'message' => 'invalid ID',
             ],400);
         }
-        if( $this->destinationRepo->isAvailableSchedule($id) ) {
+        if( $this->destinationRepo->isAvailableSchedule($id) == false ) {
             return response()->json([
                 'message' => 'fail',
                 'message' => 'This Destination is exist in schedule List',
