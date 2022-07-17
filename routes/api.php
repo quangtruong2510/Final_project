@@ -68,9 +68,6 @@ Route::group([
     // http://127.0.0.1:8000/api/destination/schedule/delete
     Route::put('schedule/complete', 'DestinationController@completecheduleList');
 
-    // http://127.0.0.1:8000/api/destination/schedule/delete
-    Route::put('schedule/reset', 'DestinationController@resetcheduleList');
-
     // http://127.0.0.1:8000/api/destination/schedule/submit/18
     Route::put('schedule/submit/{id}', 'DestinationController@completeSchedule');
 
