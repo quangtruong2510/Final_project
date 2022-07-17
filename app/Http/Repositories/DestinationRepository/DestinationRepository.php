@@ -110,7 +110,7 @@ class DestinationRepository implements DestinationRepositoryInterface
     }
 
     public function deleteScheduleList(){
-        return Destination::where('user_id', JWTAuth::user()->id)->update([['is_schedule' => false],['is_complete' => false]]);
+        return Destination::where('user_id', JWTAuth::user()->id)->update(['is_schedule' => false],['is_complete' => false]);
     }
 
     public function submitCompleteSchedule($id){
