@@ -203,4 +203,5 @@ class DestinationController extends Controller
         ],200);
     }
 
+
 }
